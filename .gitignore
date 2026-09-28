@@ -1,0 +1,36 @@
+# Maven 빌드 결과물과 배포 파일
+target/
+dist/
+*.class
+
+# 내려받은 도구, 캐시, 마이그레이션 백업
+.tools/
+.migration-backup/
+
+# 로컬 실행 파일, 로그, 테스트 입력 데이터
+runtime/
+state/
+logs/
+*.log
+*.log.*
+/data/
+/data-collector/data/
+/data-hub/data/
+
+# 로컬 인증 정보와 PC별 설정
+.env
+.env.*
+!.env.example
+**/src/main/resources/application.properties
+**/config/application.properties
+**/config/*.local.json
+
+# IDE 설정 (.run의 공유 실행 구성은 제외하지 않음)
+.idea/
+.vscode/
+*.iml
+
+# 운영체제 메타데이터
+.DS_Store
+Thumbs.db
+Desktop.ini

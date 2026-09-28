@@ -1,0 +1,14 @@
+<service>
+  <id>DataBridgeCollector</id>
+  <name>DataBridge Collector</name>
+  <description>Standard Modbus TCP, Excel and text data collection service</description>
+  <executable>%BASE%\DataBridgeCollector.exe</executable>
+  <arguments>run --config "%BASE%\config\collector.json"</arguments>
+  <workingdirectory>%BASE%</workingdirectory>
+  <startmode>Automatic</startmode>
+  <delayedAutoStart>true</delayedAutoStart>
+  <onfailure action="restart" delay="10 sec"/>
+  <stoptimeout>150 sec</stoptimeout>
+  <logpath>%BASE%\state</logpath>
+  <log mode="roll-by-size"><sizeThreshold>10240</sizeThreshold><keepFiles>5</keepFiles></log>
+</service>

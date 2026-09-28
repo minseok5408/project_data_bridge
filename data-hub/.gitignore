@@ -1,0 +1,26 @@
+target/
+dist/
+.tools/
+.migration-backup/
+runtime/
+.idea/
+.vscode/
+*.iml
+.env
+.env.*
+config/*.local.json
+
+# 로컬 인증 정보 (이 모듈을 단독으로 사용해도 제외)
+/src/main/resources/application.properties
+/config/application.properties
+!.env.example
+
+# 실행 로그와 운영체제 메타데이터
+state/
+logs/
+*.log
+*.log.*
+*.class
+.DS_Store
+Thumbs.db
+Desktop.ini

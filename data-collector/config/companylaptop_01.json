@@ -1,0 +1,23 @@
+{
+  "collectionType": "modbus_tcp",
+  "nodes": [
+    {
+      "nodeId": "companylaptop_01",
+      "host": "192.168.0.158",
+      "com_cd": "company",
+      "counterWordOrder": "HIGH_LOW",
+      "port": 502,
+      "pollIntervalMs": 2000,
+      "timeoutSeconds": 3,
+      "enabled": true,
+      "readBlocks": [
+        {
+          "unitId": 1,
+          "functionCode": 3,
+          "startAddress": 1,
+          "registerCount": 3
+        }
+      ]
+    }
+  ]
+}

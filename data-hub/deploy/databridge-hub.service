@@ -1,0 +1,17 @@
+[Unit]
+Description=DataBridge Hub
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=databridge
+WorkingDirectory=/opt/databridge-hub
+ExecStart=/opt/jdk-25.0.3/bin/java -jar /opt/databridge-hub/data-hub.jar run --config /opt/databridge-hub/config/application.properties
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=40
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

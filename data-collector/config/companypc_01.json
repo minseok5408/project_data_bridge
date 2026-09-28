@@ -1,0 +1,119 @@
+{
+  "collectionType": [
+    "text",
+    "excel"
+  ],
+  "sources": [
+    {
+      "id": "text_01",
+      "com_cd": "company",
+      "equipmentId": "companypc_01",
+      "type": "text",
+      "enabled": true,
+      "directory": "C:/data",
+      "glob": "*.txt",
+      "encoding": "UTF-8",
+      "delimiter": "\t",
+      "skipLines": 1,
+      "pollIntervalSeconds": 5,
+      "settleSeconds": 2,
+      "fields": {
+        "observed_at": {
+          "column": 1,
+          "type": "datetime",
+          "target": "observed_at",
+          "datetimeFormat": "yyyy-MM-dd HH:mm:ss",
+          "headerName": "측정시각"
+        },
+        "item_code": {
+          "column": 2,
+          "type": "str",
+          "kind": "text",
+          "headerName": "항목코드",
+          "target": "item_code",
+          "required": false
+        },
+        "cmnt": {
+          "column": 6,
+          "type": "str",
+          "kind": "text",
+          "headerName": "비고",
+          "target": "cmnt",
+          "required": false
+        }
+      },
+      "payload": {
+        "value1": {
+          "column": 3,
+          "type": "float",
+          "headerName": "값1"
+        },
+        "value2": {
+          "column": 4,
+          "type": "float",
+          "headerName": "값2"
+        },
+        "value3": {
+          "column": 5,
+          "type": "float",
+          "headerName": "값3"
+        }
+      }
+    },
+    {
+      "id": "excel_01",
+      "com_cd": "company",
+      "equipmentId": "companypc_01",
+      "type": "excel",
+      "enabled": true,
+      "directory": "C:/data",
+      "glob": "*.xlsx",
+      "sheet": "0",
+      "layout": "rows",
+      "firstDataRow": 2,
+      "pollIntervalSeconds": 5,
+      "settleSeconds": 2,
+      "fields": {
+        "observed_at": {
+          "type": "datetime",
+          "target": "observed_at",
+          "headerCell": "A1",
+          "headerName": "측정시각"
+        },
+        "item_code": {
+          "type": "str",
+          "kind": "text",
+          "headerCell": "B1",
+          "headerName": "항목코드",
+          "target": "item_code",
+          "required": false
+        },
+        "cmnt": {
+          "type": "str",
+          "kind": "text",
+          "headerCell": "F1",
+          "headerName": "비고",
+          "target": "cmnt",
+          "required": false
+        }
+      },
+      "payload": {
+        "value1": {
+          "type": "float",
+          "headerCell": "C1",
+          "headerName": "값1"
+        },
+        "value2": {
+          "type": "float",
+          "headerCell": "D1",
+          "headerName": "값2"
+        },
+        "value3": {
+          "type": "float",
+          "headerCell": "E1",
+          "headerName": "값3"
+        }
+      }
+    }
+  ]
+}

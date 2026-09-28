@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>io.databridge</groupId>
+    <artifactId>project_data_bridge</artifactId>
+    <version>1.0.0</version>
+  </parent>
+  <artifactId>data-hub</artifactId>
+  <name>DataBridge Hub</name>
+  <properties>
+    <main.class>io.databridge.ims.ImsApplication</main.class>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-nop</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mariadb.jdbc</groupId>
+      <artifactId>mariadb-java-client</artifactId>
+      <version>3.5.7</version>
+    </dependency>
+    <dependency>
+      <groupId>io.databridge</groupId>
+      <artifactId>data-collector</artifactId>
+      <version>${project.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>data-hub</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>integration-tests</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-enforcer-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>require-test-database</id>
+                <goals>
+                  <goal>enforce</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <requireProperty>
+                      <property>env.IMS_TEST_DB_URL</property>
+                      <regex>jdbc:mariadb://.+/</regex>
+                      <message>Use data-hub/scripts/build.ps1 for an isolated test database, or set IMS_TEST_DB_URL to an isolated MariaDB server URL ending in /.</message>
+                      <regexMessage>Use data-hub/scripts/build.ps1 for an isolated test database, or set IMS_TEST_DB_URL to an isolated MariaDB server URL ending in /.</regexMessage>
+                    </requireProperty>
+                    <requireProperty>
+                      <property>env.IMS_TEST_DB_USER</property>
+                      <regex>.+</regex>
+                      <message>Set IMS_TEST_DB_USER for the isolated test database.</message>
+                      <regexMessage>Set IMS_TEST_DB_USER for the isolated test database.</regexMessage>
+                    </requireProperty>
+                    <requireProperty>
+                      <property>env.IMS_TEST_DB_PASSWORD</property>
+                      <regex>.+</regex>
+                      <message>Set IMS_TEST_DB_PASSWORD for the isolated test database.</message>
+                      <regexMessage>Set IMS_TEST_DB_PASSWORD for the isolated test database.</regexMessage>
+                    </requireProperty>
+                  </rules>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>integration-tests</id>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <includes combine.self="override">
+                    <include>**/*IT.java</include>
+                  </includes>
+                  <failIfNoTests>true</failIfNoTests>
+                  <reportsDirectory>${project.build.directory}/integration-test-reports</reportsDirectory>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
